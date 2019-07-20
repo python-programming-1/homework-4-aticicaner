@@ -1,3 +1,10 @@
+# Two Different Solutions Involved
+## rock_paper_scissors.py 
+big while blocks to implement additional parameters globally
+## rock_paper_scissors_old.py 
+modular methods that run the game
+
+
 # Homework 4
 
 # Let's Make A Game! 
