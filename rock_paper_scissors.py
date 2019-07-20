@@ -8,10 +8,14 @@ def whatMove(i):
         return 'paper'
     elif i == 2:
         return 'scissors'
+# 0 > rock  1 > paper  2 > scissors
 
 def computerMove():
+    # computer does not have access to immediate player move
+    # computer has access to past data of the player
     sensitivity = 3  # inversely proportinal to sensitivity
     response_treshold = 5
+    # below conditionals reduce computer predictability
     if player_moves['rock'] > response_treshold:
         player_moves['rock'] -= 2
         player_moves['paper'] -= 3
@@ -24,9 +28,7 @@ def computerMove():
         player_moves['rock'] -= 3
         player_moves['paper'] -= 3
         player_moves['scissors'] -= 2
-    # parameters above can be changed depending on many other behaviors of the player
-    # to adjust predictability of the computer and its ability to predict players patterns
-    # it is very primitive can be developed into the depths of the abyss
+    # below parameters are for computers ability to predict player patterns
     random.seed(time.time())
     rock = random.randint(0,sensitivity) + player_moves['scissors']
     random.seed(time.time())
@@ -36,6 +38,8 @@ def computerMove():
     move_pool = [rock, paper, scissors]
     return move_pool.index(max(move_pool))
 
+# menu and game flow parameters
+# these booleans determine where in the loop user lands after selecting an option
 again = False
 initial_input = False
 
@@ -44,6 +48,8 @@ computer_score = 0
 game_on = True
 player_moves = {'rock' : 0, 'paper' : 0, 'scissors' : 0}
 
+# conditional statements below are not for decisions of the computer
+# they govern the menu and game flow
 print('######## Rock Paper Scissors Game #########')
 while game_on == True:
     while initial_input == False:
@@ -66,7 +72,7 @@ while game_on == True:
             continue
         else:
             print('Please use a valid input')
-    if game_on == True:
+    if game_on == True:  # below play input is taken and recorded in player_moves dict
         choice = input('Make a move! r (rock) p (paper) s(scissors)  sc(scoreboard)  ').lower()
         if choice == 'r':
             move = 0
@@ -85,9 +91,10 @@ while game_on == True:
         else:
             print('Please use a valid input')
             continue
-
+        # computer move asked here, it has no access to current move
         computer_move = computerMove()
         result = move - computer_move
+        # determining the round output mathematically
         if result == 0:
             print('Draw! > Computer made the same move')
         elif result == 1 or result == -2:
@@ -96,6 +103,6 @@ while game_on == True:
         elif result == 2 or result == -1:
             print('You chose ' + whatMove(move) + ' and the computer chose ' + whatMove(computer_move) + '. You Lose!')
             computer_score += 1
-
+        # ask if they want to play again and move up to the top of the loop
         again = True
         initial_input = False
