@@ -11,12 +11,19 @@ def whatMove(i):
 
 def computerMove():
     sensitivity = 3  # inversely proportinal to sensitivity
-    if player_moves['rock'] > 6:
-        player_moves['rock'] = 3
-    if player_moves['paper'] > 6:
-        player_moves['paper'] = 3
-    if player_moves['scissors'] > 6:
-        player_moves['scissors'] = 3
+    response_treshold = 5
+    if player_moves['rock'] > response_treshold:
+        player_moves['rock'] -= 2
+        player_moves['paper'] -= 3
+        player_moves['scissors'] -= 3
+    if player_moves['paper'] > response_treshold:
+        player_moves['rock'] -= 3
+        player_moves['paper'] -= 2
+        player_moves['scissors'] -= 3
+    if player_moves['scissors'] > response_treshold:
+        player_moves['rock'] -= 3
+        player_moves['paper'] -= 3
+        player_moves['scissors'] -= 2
     # parameters above can be changed depending on many other behaviors of the player
     # to adjust predictability of the computer and its ability to predict players patterns
     # it is very primitive can be developed into the depths of the abyss
