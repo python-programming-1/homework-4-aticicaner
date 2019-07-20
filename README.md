@@ -1,8 +1,8 @@
 # Two Different Solutions Involved
 ## rock_paper_scissors.py 
-big while blocks to implement additional parameters globally
+moved away from method based design to make 8th task easier
 ## rock_paper_scissors_old.py 
-modular methods that run the game
+method based design ( old solution )
 
 
 # Homework 4
