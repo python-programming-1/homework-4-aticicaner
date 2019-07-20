@@ -10,8 +10,24 @@ def whatMove(i):
         return 'scissors'
 
 def computerMove():
+    sensitivity = 3  # inversely proportinal to sensitivity
+    if player_moves['rock'] > 6:
+        player_moves['rock'] = 3
+    if player_moves['paper'] > 6:
+        player_moves['paper'] = 3
+    if player_moves['scissors'] > 6:
+        player_moves['scissors'] = 3
+    # parameters above can be changed depending on many other behaviors of the player
+    # to adjust predictability of the computer and its ability to predict players patterns
+    # it is very primitive can be developed into the depths of the abyss
     random.seed(time.time())
-    return random.randint(0,2)
+    rock = random.randint(0,sensitivity) + player_moves['scissors']
+    random.seed(time.time())
+    paper = random.randint(0,sensitivity) + player_moves['rock']
+    random.seed(time.time())
+    scissors = random.randint(0,sensitivity) + player_moves['paper']
+    move_pool = [rock, paper, scissors]
+    return move_pool.index(max(move_pool))
 
 again = False
 initial_input = False
@@ -20,7 +36,6 @@ player_score = 0
 computer_score = 0
 game_on = True
 player_moves = {'rock' : 0, 'paper' : 0, 'scissors' : 0}
-
 
 print('######## Rock Paper Scissors Game #########')
 while game_on == True:
