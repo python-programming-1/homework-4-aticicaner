@@ -9,12 +9,18 @@ def whatMove(i):
     elif i == 2:
         return 'scissors'
 
+def computerMove():
+    random.seed(time.time())
+    return random.randint(0,2)
+
 again = False
 initial_input = False
 
 player_score = 0
 computer_score = 0
 game_on = True
+player_moves = {'rock' : 0, 'paper' : 0, 'scissors' : 0}
+
 
 print('######## Rock Paper Scissors Game #########')
 while game_on == True:
@@ -42,10 +48,13 @@ while game_on == True:
         choice = input('Make a move! r (rock) p (paper) s(scissors)  sc(scoreboard)  ').lower()
         if choice == 'r':
             move = 0
+            player_moves['rock'] += 1
         elif choice == 'p':
             move = 1
+            player_moves['paper'] += 1
         elif choice == 's':
             move = 2
+            player_moves['scissors'] += 1
         elif choice == 'sc':
             print('You won ' + str(player_score) + '/' + str((player_score + computer_score)) + ' games')
             again = True
@@ -55,8 +64,7 @@ while game_on == True:
             print('Please use a valid input')
             continue
 
-        random.seed(time.time())
-        computer_move = random.randint(0,2)
+        computer_move = computerMove()
         result = move - computer_move
         if result == 0:
             print('Draw! > Computer made the same move')
@@ -69,4 +77,3 @@ while game_on == True:
 
         again = True
         initial_input = False
-
