@@ -13,9 +13,6 @@ def promptPlay():
         print('Thank you for playing!')
     elif(response == 'sc'):
         showScores()
-    else:
-        print('Please enter a valid input!')
-        exit()
 
 def showScores():
     global player_score
@@ -35,21 +32,21 @@ def computerMove():
     global player_moves
     # computer does not have access to immediate player move
     # computer has access to past data of the player
-    sensitivity = 2  # inversely proportinal to sensitivity
-    response_treshold = 4
+    sensitivity = 3  # inversely proportinal to sensitivity
+    response_treshold = 3
     # below conditionals reduce computer predictability
     if player_moves['rock'] > response_treshold:
-        player_moves['rock'] -= 3
-        player_moves['paper'] -= 2
-        player_moves['scissors'] -= 2
+        player_moves['rock'] -= 2
+        player_moves['paper'] -= 1
+        player_moves['scissors'] -= 1
     if player_moves['paper'] > response_treshold:
-        player_moves['rock'] -= 2
-        player_moves['paper'] -= 3
-        player_moves['scissors'] -= 2
-    if player_moves['scissors'] > response_treshold:
-        player_moves['rock'] -= 2
+        player_moves['rock'] -= 1
         player_moves['paper'] -= 2
-        player_moves['scissors'] -= 3
+        player_moves['scissors'] -= 1
+    if player_moves['scissors'] > response_treshold:
+        player_moves['rock'] -= 1
+        player_moves['paper'] -= 1
+        player_moves['scissors'] -= 2
     # below parameters are for computers ability to predict player patterns
     random.seed(time.time())
     rock = random.randint(0,sensitivity) + player_moves['scissors']
@@ -79,9 +76,6 @@ def playGame():
         player_moves['scissors'] += 1
     elif choice == 'sc':
         showScores()
-    else:
-        print('Please enter a valid move')
-        exit()
 
     result = move - ai_move
 
