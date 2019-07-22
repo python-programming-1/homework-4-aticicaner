@@ -1,8 +1,11 @@
-# Two Different Solutions Involved
-## rock_paper_scissors.py 
-moved away from method based design to make 8th task easier
-## rock_paper_scissors_old.py 
-method based design ( old solution )
+## Solution explanation
+Methods are governing the overall structure of the game
+
+Parameters are used globally to aviod bouncing variables around
+
+Computer has no access to immediate user input
+The computer difficulty is purely subjectively advantageous against certain playstyle as it has 50 % chance to win/lose against random inputs. If you falsely seek the pattern the computer punishes you, the objective is to get the 1 step ahead of the player which is speculative in nature as 2 steps forward is 1 step back in rock paper scissors, and it layers modularly. 
+
 
 
 # Homework 4
