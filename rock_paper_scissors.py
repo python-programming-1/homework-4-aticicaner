@@ -6,33 +6,50 @@ computer_score = 0
 player_moves = {'rock' : 0, 'paper' : 0, 'scissors' : 0}
 
 def promptPlay():
-    response = input('Do you want to play y/n ?').lower()
+    response = input('Do you want to play y/n ? or sc for scoreboard ').lower()
     if(response == 'y'):
         playGame()
     elif(response == 'n'):
         print('Thank you for playing!')
+    elif(response == 'sc'):
+        showScores()
     else:
-        print('Please enter a valid input')
+        print('Please enter a valid input!')
+        exit()
+
+def showScores():
+    global player_score
+    global computer_score
+    print('You won ' + str(player_score) + '/' + str((player_score + computer_score)) + ' games vs comp!')
+    promptPlay()
+
+def whatMove(i):
+    if i == 0:
+        return 'rock'
+    elif i == 1:
+        return 'paper'
+    elif i == 2:
+        return 'scissors'
 
 def computerMove():
     global player_moves
     # computer does not have access to immediate player move
     # computer has access to past data of the player
-    sensitivity = 3  # inversely proportinal to sensitivity
-    response_treshold = 5
+    sensitivity = 2  # inversely proportinal to sensitivity
+    response_treshold = 4
     # below conditionals reduce computer predictability
     if player_moves['rock'] > response_treshold:
-        player_moves['rock'] -= 2
-        player_moves['paper'] -= 3
-        player_moves['scissors'] -= 3
-    if player_moves['paper'] > response_treshold:
         player_moves['rock'] -= 3
         player_moves['paper'] -= 2
-        player_moves['scissors'] -= 3
-    if player_moves['scissors'] > response_treshold:
-        player_moves['rock'] -= 3
+        player_moves['scissors'] -= 2
+    if player_moves['paper'] > response_treshold:
+        player_moves['rock'] -= 2
         player_moves['paper'] -= 3
         player_moves['scissors'] -= 2
+    if player_moves['scissors'] > response_treshold:
+        player_moves['rock'] -= 2
+        player_moves['paper'] -= 2
+        player_moves['scissors'] -= 3
     # below parameters are for computers ability to predict player patterns
     random.seed(time.time())
     rock = random.randint(0,sensitivity) + player_moves['scissors']
@@ -47,6 +64,9 @@ def playGame():
     global player_moves
     global player_score
     global computer_score
+
+    ai_move = computerMove()
+    
     choice = input('Make a move! r (rock) p (paper) s(scissors)  sc(scoreboard) ').lower()
     if choice == 'r':
         move = 0
@@ -61,47 +81,21 @@ def playGame():
         showScores()
     else:
         print('Please enter a valid move')
-        playGame()
-
-    random.seed(time.time())
-    ai_move = random.randint(0,2)
+        exit()
 
     result = move - ai_move
 
     if result == 0:
         print('Draw! > Computer made the same move')
-        playAgain()
+        promptPlay()
     elif result == 1 or result == -2:
         print('You chose ' + whatMove(move) + ' and the computer chose ' + whatMove(ai_move) + '. You Win!')
         player_score += 1
-        playAgain()
+        promptPlay()
     elif result == 2 or result == -1:
         print('You chose ' + whatMove(move) + ' and the computer chose ' + whatMove(ai_move) + '. You Lost!')
         computer_score += 1
-        playAgain()
-
-def showScores():
-    global player_score
-    global computer_score
-    print('You won ' + str(player_score) + '/' + str((player_score + computer_score)) + ' games vs comp!')
-    playAgain()
-
-def playAgain():
-    choice = input('Do you want to play again? y/n or sc for scoreboard').lower()
-    if choice == 'y':
-        playGame()
-    elif choice == 'n':
-        print('Thank you for playing!')
-    elif choice == 'sc':
-        showScores()
-
-def whatMove(i):
-    if (i == 0):
-        return 'rock'
-    elif i == 1:
-        return 'paper'
-    elif i == 2:
-        return 'scissors'
+        promptPlay()
     
 print('######## Rock Paper Scissors Game #########')
 promptPlay()
