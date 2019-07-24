@@ -5,21 +5,37 @@ player_score = 0
 computer_score = 0
 player_moves = {'rock' : 0, 'paper' : 0, 'scissors' : 0}
 
+# handling wrong inputs without crashing the game
+# makes sure user returns to proper place back safely
+def wrongInput(input_type):
+    if input_type == 1:
+        print('Please enter a valid input y/n/sc!')
+        promptPlay()
+    elif input_type == 2:
+        print('Please enter a valid input r/p/s/sc!')
+        playGame()
+
+# user prompt to ask if they want to play
 def promptPlay():
     response = input('Do you want to play y/n ? or sc for scoreboard ').lower()
     if(response == 'y'):
         playGame()
     elif(response == 'n'):
         print('Thank you for playing!')
+        quit()
     elif(response == 'sc'):
         showScores()
+    else:
+        wrongInput(1)
 
+# display scores and return to menu
 def showScores():
     global player_score
     global computer_score
     print('You won ' + str(player_score) + '/' + str((player_score + computer_score)) + ' games vs comp!')
     promptPlay()
 
+# query which move numerically to string
 def whatMove(i):
     if i == 0:
         return 'rock'
@@ -28,6 +44,8 @@ def whatMove(i):
     elif i == 2:
         return 'scissors'
 
+# mediocre and arguably terrible AI implementation to operate computer action
+# but I did try and it did decent job countering me until I figured out how to beat it
 def computerMove():
     global player_moves
     # computer does not have access to immediate player move
@@ -57,6 +75,8 @@ def computerMove():
     move_pool = [rock, paper, scissors]
     return move_pool.index(max(move_pool))
 
+# game main 
+# collects AI play first so it doesn't get influenced by player input
 def playGame():
     global player_moves
     global player_score
@@ -76,6 +96,8 @@ def playGame():
         player_moves['scissors'] += 1
     elif choice == 'sc':
         showScores()
+    else:
+        wrongInput(2)
 
     result = move - ai_move
 
@@ -90,6 +112,7 @@ def playGame():
         print('You chose ' + whatMove(move) + ' and the computer chose ' + whatMove(ai_move) + '. You Lost!')
         computer_score += 1
         promptPlay()
-    
+
+# main call to start the application
 print('######## Rock Paper Scissors Game #########')
 promptPlay()
