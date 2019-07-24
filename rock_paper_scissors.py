@@ -51,7 +51,7 @@ def computerMove():
     # computer does not have access to immediate player move
     # computer has access to past data of the player
     sensitivity = 3  # inversely proportinal to sensitivity: 0 for most sensitive
-    response_treshold = 5
+    response_treshold = 4
     reduction_rate = 2
     # below conditionals reduce computer predictability
     if player_moves['rock'] > response_treshold:
@@ -68,6 +68,9 @@ def computerMove():
     random.seed(time.time())
     scissors = random.randint(0,sensitivity) + player_moves['paper']
     move_pool = [rock, paper, scissors]
+    if rock == paper or rock == scissors or paper == scissors:
+        random.seed(time.time())
+        return random.randint(0,2)
     return move_pool.index(max(move_pool))
 
 # game main 
