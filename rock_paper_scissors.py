@@ -50,21 +50,16 @@ def computerMove():
     global player_moves
     # computer does not have access to immediate player move
     # computer has access to past data of the player
-    sensitivity = 3  # inversely proportinal to sensitivity
-    response_treshold = 3
+    sensitivity = 3  # inversely proportinal to sensitivity: 0 for most sensitive
+    response_treshold = 5
+    reduction_rate = 2
     # below conditionals reduce computer predictability
     if player_moves['rock'] > response_treshold:
-        player_moves['rock'] -= 2
-        player_moves['paper'] -= 1
-        player_moves['scissors'] -= 1
+        player_moves['rock'] -= reduction_rate
     if player_moves['paper'] > response_treshold:
-        player_moves['rock'] -= 1
-        player_moves['paper'] -= 2
-        player_moves['scissors'] -= 1
+        player_moves['paper'] -= reduction_rate
     if player_moves['scissors'] > response_treshold:
-        player_moves['rock'] -= 1
-        player_moves['paper'] -= 1
-        player_moves['scissors'] -= 2
+        player_moves['scissors'] -= reduction_rate
     # below parameters are for computers ability to predict player patterns
     random.seed(time.time())
     rock = random.randint(0,sensitivity) + player_moves['scissors']
